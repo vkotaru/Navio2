@@ -21,8 +21,8 @@ sudo ./Servo
 #include <unistd.h>
 #include <memory>
 
-#define SERVO_MIN 0 /*mS*/
-#define SERVO_MAX 2.5 /*mS*/
+#define SERVO_MIN 1.1 /*mS*/
+#define SERVO_MAX 1.6 /*mS*/
 
 #define PWM_OUTPUT 0
 
@@ -73,22 +73,22 @@ int main(int argc, char *argv[])
 
     while (true) {
 
-        SERVO_OUT = SERVO_OUT+(di*0.5);
+        // SERVO_OUT = SERVO_OUT+(di*0.5);
 
-        pwm->set_duty_cycle(PWM_OUTPUT, SERVO_OUT);
+        pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MIN);
         sleep(1);
 
-        if (SERVO_OUT<=SERVO_MIN)
-        {
-            di = 1;
-        }
-        if (SERVO_OUT >= SERVO_MAX)
-        {
-            di = -1;
-        }
+        // if (SERVO_OUT<=SERVO_MIN)
+        // {
+        //     di = 1;
+        // }
+        // if (SERVO_OUT >= SERVO_MAX)
+        // {
+        //     di = -1;
+        // }
 
-        // pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MAX);
-        // sleep(1);
+        pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MAX);
+        sleep(1);
     }
 
 return 0;
