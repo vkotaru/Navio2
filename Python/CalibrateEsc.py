@@ -12,7 +12,7 @@ import navio.util
 
 def main():
     
-    if ~length(sys.argv)>1:
+    if ~len(sys.argv)>1:
         print"provide the pwm number connected to the ESC"
         sys.exit(1)
 
@@ -30,15 +30,20 @@ def main():
         pwm.set_period(50)
         pwm.enable
 
+        print"setting Motor_Neutral"
         pwm.set_duty_cycle(Motor_Neutral)
         time.sleep(7)
+        print"Setting Motor_Max"
         pwm.set_duty_cycle(Motor_Max)
         time.sleep(7)
+        print"Setting Motor_Min"
         pwm.set_duty_cycle(Motor_Min)
         time.sleep(7)
+        print"Setting Motor_Neutral"
         pwm.set_duty_cycle(Motor_Neutral)
         time.sleep(5)
 
+        print"Entering While loop"
         while (True):
             pwm.set_duty_cycle(1.75)
 
