@@ -21,10 +21,10 @@ sudo ./Servo
 #include <unistd.h>
 #include <memory>
 
-#define SERVO_MIN 1.1 /*mS*/
-#define SERVO_MAX 1.6 /*mS*/
+#define SERVO_MIN 1.250 /*mS*/
+#define SERVO_MAX 1.750 /*mS*/
 
-#define PWM_OUTPUT 0
+#define PWM_OUTPUT 2
 
 
 using namespace Navio;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
         return 1;
     }
     
-    pwm->set_frequency(PWM_OUTPUT, 400);
+    pwm->set_frequency(PWM_OUTPUT, 50);
 
     if ( !(pwm->enable(PWM_OUTPUT)) ) {
         return 1;
