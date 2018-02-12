@@ -46,33 +46,50 @@ std::unique_ptr <RCOutput> get_rcout()
 int main(int argc, char *argv[])
 {
 
-        auto pwm = get_rcout();
+    auto pwm = get_rcout();
 
-        if (check_apm()) {
-            return 1;
+    if (check_apm()) {
+        return 1;
+    }
+
+    if (getuid()) {
+        fprintf(stderr, "Not root. Please launch like this: sudo %s\n", argv[0]);
+    }
+
+
+    if( !(pwm->initialize(PWM_OUTPUT)) ) {
+        return 1;
+    }
+    
+    pwm->set_frequency(PWM_OUTPUT, 50);
+
+    if ( !(pwm->enable(PWM_OUTPUT)) ) {
+        return 1;
+    }
+
+    int i = 0;
+    int SERVO_OUT = SERVO_MIN;
+    int di = 1;
+
+    while (true) {
+
+        SERVO_OUT = SERVO_OUT+(di*50);
+
+        pwm->set_duty_cycle(PWM_OUTPUT, SERVO_OUT);
+        sleep(1);
+
+        if (SERVO_OUT<=SERVO_MIN)
+        {
+            di = 1;
+        }
+        if (SERVO_OUT >= SERVO_MAX)
+        {
+            di = -1;
         }
 
-        if (getuid()) {
-            fprintf(stderr, "Not root. Please launch like this: sudo %s\n", argv[0]);
-        }
+        // pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MAX);
+        // sleep(1);
+    }
 
-
-        if( !(pwm->initialize(PWM_OUTPUT)) ) {
-            return 1;
-        }
-        
-	pwm->set_frequency(PWM_OUTPUT, 50);
-
-	if ( !(pwm->enable(PWM_OUTPUT)) ) {
-	    return 1;
-	}
-
-        while (true) {
-            pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MIN);
-            sleep(1);
-            pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MAX);
-            sleep(1);
-        }
-
-    return 0;
+return 0;
 }
