@@ -21,10 +21,10 @@ sudo ./Servo
 #include <unistd.h>
 #include <memory>
 
-#define SERVO_MIN 1.250 /*mS*/
-#define SERVO_MAX 1.750 /*mS*/
+#define SERVO_MIN 1.060 /*mS*/
+#define SERVO_MAX 1.860 /*mS*/
 
-#define PWM_OUTPUT 2
+#define PWM_OUTPUT 0
 
 
 using namespace Navio;
