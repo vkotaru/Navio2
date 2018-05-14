@@ -9,7 +9,7 @@ import datetime
 
 navio.util.check_apm()
 
-PWM_OUTPUT = 1 
+PWM_OUTPUT = 0 
 SERVO_MIN = 1.060 #ms
 SERVO_MAX = 1.860 #ms
 SERVO_NOM = 1.500 #ms
