@@ -33,9 +33,12 @@ int main(int argc, char *argv[])
 
     rcin->initialize();
 
+    int channel_num = 0;
+    printf("reading channel %d\n",channel_num);
+
     while (true)
     {
-        int period = rcin->read(2);
+        int period = rcin->read(channel_num);
         if (period == READ_FAILED)
             return EXIT_FAILURE;
         printf("%d\n", period);
