@@ -24,8 +24,10 @@ sudo ./Servo
 #define SERVO_MIN 1.060 /*mS*/
 #define SERVO_MAX 1.860 /*mS*/
 
-#define PWM_OUTPUT ={0,1,2,3}
-#define N = 4
+//#define
+
+int PWM_OUTPUT[4] =  {0,1,2,3};
+#define N 4
 
 using namespace Navio;
 
@@ -70,7 +72,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    % initialize & calibrate all servos
+    // initialize & calibrate all servos
     for(int i = 0; i < N; i++)
     {
         pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MAX);        
@@ -90,13 +92,13 @@ int main(int argc, char *argv[])
 
     float dServo = float(SERVO_MAX-SERVO_MIN)/10.0;
 
-    for(int j = 0; i< 10; j++)
+    for(int j = 0; j< 10; j++)
     {
         for(int i = 0; i < N; i++)
         {
             pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MAX-j*dServo);        
         }
-        sleep(3);
+        sleep(5);
     }
 
     // while (true) {
