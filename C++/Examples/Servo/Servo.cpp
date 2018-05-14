@@ -24,8 +24,8 @@ sudo ./Servo
 #define SERVO_MIN 1.060 /*mS*/
 #define SERVO_MAX 1.860 /*mS*/
 
-#define PWM_OUTPUT 1
-
+#define PWM_OUTPUT ={0,1,2,3}
+#define N = 4
 
 using namespace Navio;
 
@@ -57,39 +57,67 @@ int main(int argc, char *argv[])
     }
 
 
-    if( !(pwm->initialize(PWM_OUTPUT)) ) {
-        return 1;
+    for(int i = 0; i < N; i++)
+    {
+        if( !(pwm->initialize(PWM_OUTPUT[i])) ) {
+            return 1;
+        }
+        
+        pwm->set_frequency(PWM_OUTPUT[i], 50);
+
+        if ( !(pwm->enable(PWM_OUTPUT[i])) ) {
+            return 1;
+        }
     }
-    
-    pwm->set_frequency(PWM_OUTPUT, 50);
 
-    if ( !(pwm->enable(PWM_OUTPUT)) ) {
-        return 1;
+    % initialize & calibrate all servos
+    for(int i = 0; i < N; i++)
+    {
+        pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MAX);        
+    }
+    sleep(3);
+    for(int i = 0; i < N; i++)
+    {
+        pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MIN);        
+    }
+    sleep(5);
+    printf("calibration done\n");
+    for(int i = 0; i < N; i++)
+    {
+        pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MIN);        
+    }
+    sleep(5);
+
+    float dServo = float(SERVO_MAX-SERVO_MIN)/10.0;
+
+    for(int j = 0; i< 10; j++)
+    {
+        for(int i = 0; i < N; i++)
+        {
+            pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MAX-j*dServo);        
+        }
+        sleep(3);
     }
 
-    int i = 0;
-    int SERVO_OUT = SERVO_MIN;
-    int di = 1;
+    // while (true) {
 
-    while (true) {
+    //     // SERVO_OUT = SERVO_OUT+(di*0.5);
 
-        // SERVO_OUT = SERVO_OUT+(di*0.5);
+    //     pwm->set_duty_cycle(PWM_OUTPUT, 1.1*SERVO_MIN);
+    //     sleep(1);
 
-        pwm->set_duty_cycle(PWM_OUTPUT, .9*SERVO_MIN);
-        sleep(1);
+    //     // if (SERVO_OUT<=SERVO_MIN)
+    //     // {
+    //     //     di = 1;
+    //     // }
+    //     // if (SERVO_OUT >= SERVO_MAX)
+    //     // {
+    //     //     di = -1;
+    //     // }
 
-        // if (SERVO_OUT<=SERVO_MIN)
-        // {
-        //     di = 1;
-        // }
-        // if (SERVO_OUT >= SERVO_MAX)
-        // {
-        //     di = -1;
-        // }
-
-        pwm->set_duty_cycle(PWM_OUTPUT, .9*SERVO_MAX);
-        sleep(1);
-    }
+    //     pwm->set_duty_cycle(PWM_OUTPUT, .9*SERVO_MAX);
+    //     sleep(1);
+    // }
 
 return 0;
 }
