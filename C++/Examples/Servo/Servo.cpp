@@ -24,7 +24,7 @@ sudo ./Servo
 #define SERVO_MIN 1.060 /*mS*/
 #define SERVO_MAX 1.860 /*mS*/
 
-#define PWM_OUTPUT 0
+#define PWM_OUTPUT 1
 
 
 using namespace Navio;
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 
         // SERVO_OUT = SERVO_OUT+(di*0.5);
 
-        pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MIN);
+        pwm->set_duty_cycle(PWM_OUTPUT, .9*SERVO_MIN);
         sleep(1);
 
         // if (SERVO_OUT<=SERVO_MIN)
@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
         //     di = -1;
         // }
 
-        pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MAX);
+        pwm->set_duty_cycle(PWM_OUTPUT, .9*SERVO_MAX);
         sleep(1);
     }
 
