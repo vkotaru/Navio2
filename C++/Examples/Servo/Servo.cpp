@@ -1,13 +1,10 @@
 /*
 Provided to you by Emlid Ltd (c) 2015.
 twitter.com/emlidtech || www.emlid.com || info@emlid.com
-
 Example: Control servos connected to PWM driver onboard of Navio2 shield for Raspberry Pi.
-
 Connect servo to Navio2's rc output and watch it work.
 PWM_OUTPUT = 0 complies to channel number 1, 1 to channel number 2 and so on.
 To use full range of your servo correct SERVO_MIN and SERVO_MAX according to it's specification.
-
 To run this example navigate to the directory containing it and run following commands:
 make
 sudo ./Servo
@@ -24,10 +21,8 @@ sudo ./Servo
 #define SERVO_MIN 1.060 /*mS*/
 #define SERVO_MAX 1.860 /*mS*/
 
-//#define
+#define PWM_OUTPUT 0
 
-int PWM_OUTPUT[4] =  {0,1,2,3};
-#define N 4
 
 using namespace Navio;
 
@@ -48,78 +43,33 @@ std::unique_ptr <RCOutput> get_rcout()
 int main(int argc, char *argv[])
 {
 
-    auto pwm = get_rcout();
+        auto pwm = get_rcout();
 
-    if (check_apm()) {
-        return 1;
-    }
+        if (check_apm()) {
+            return 1;
+        }
 
-    if (getuid()) {
-        fprintf(stderr, "Not root. Please launch like this: sudo %s\n", argv[0]);
-    }
+        if (getuid()) {
+            fprintf(stderr, "Not root. Please launch like this: sudo %s\n", argv[0]);
+        }
 
 
-    for(int i = 0; i < N; i++)
-    {
-        if( !(pwm->initialize(PWM_OUTPUT[i])) ) {
+        if( !(pwm->initialize(PWM_OUTPUT)) ) {
             return 1;
         }
         
-        pwm->set_frequency(PWM_OUTPUT[i], 50);
+	pwm->set_frequency(PWM_OUTPUT, 50);
 
-        if ( !(pwm->enable(PWM_OUTPUT[i])) ) {
-            return 1;
+	if ( !(pwm->enable(PWM_OUTPUT)) ) {
+	    return 1;
+	}
+
+        while (true) {
+            pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MIN);
+            sleep(1);
+            pwm->set_duty_cycle(PWM_OUTPUT, SERVO_MAX);
+            sleep(1);
         }
-    }
 
-    // initialize & calibrate all servos
-    for(int i = 0; i < N; i++)
-    {
-        pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MAX);        
-    }
-    sleep(3);
-    for(int i = 0; i < N; i++)
-    {
-        pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MIN);        
-    }
-    sleep(5);
-    printf("calibration done\n");
-    for(int i = 0; i < N; i++)
-    {
-        pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MIN);        
-    }
-    sleep(5);
-
-    float dServo = float(SERVO_MAX-SERVO_MIN)/10.0;
-
-    for(int j = 0; j< 10; j++)
-    {
-        for(int i = 0; i < N; i++)
-        {
-            pwm->set_duty_cycle(PWM_OUTPUT[i], SERVO_MAX-j*dServo);        
-        }
-        sleep(5);
-    }
-
-    // while (true) {
-
-    //     // SERVO_OUT = SERVO_OUT+(di*0.5);
-
-    //     pwm->set_duty_cycle(PWM_OUTPUT, 1.1*SERVO_MIN);
-    //     sleep(1);
-
-    //     // if (SERVO_OUT<=SERVO_MIN)
-    //     // {
-    //     //     di = 1;
-    //     // }
-    //     // if (SERVO_OUT >= SERVO_MAX)
-    //     // {
-    //     //     di = -1;
-    //     // }
-
-    //     pwm->set_duty_cycle(PWM_OUTPUT, .9*SERVO_MAX);
-    //     sleep(1);
-    // }
-
-return 0;
+    return 0;
 }
