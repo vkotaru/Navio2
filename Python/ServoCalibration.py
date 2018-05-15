@@ -29,7 +29,7 @@ def main():
     pwm.enable()
 
     fout = open('motor_calibration.txt','w')
-    first_line = "pwm[ms]\t rpm\t weight[kg]\t thrust[kgf]\t torque[Nm]"
+    first_line = "pwm[ms]\t rpm\t thrust[kgf]\t torque[Nm]"
     fout.write(first_line)
 
     loop_for(3,pwm.set_duty_cycle, SERVO_MAX)
@@ -49,11 +49,11 @@ def main():
         print "pwm value: " + str(pwm_value) + "\n"
 
         rpm_value = raw_input("enter rpm value: \n")
-        weight_Value = raw_input("enter weigth value: \n")
+        #weight_Value = raw_input("enter weigth value: \n")
         thrust_value = raw_input("enter thrust value: \n")
         torque_value = raw_input("enter torque value: \n")
 
-        str_value = str(pwm_value) + "\t " + rpm_value + "\t " + weight_Value + "\t " + thrust_value + "\t " + torque_value + "\n"
+        str_value = str(pwm_value) + "\t " + rpm_value + "\t " + thrust_value + "\t " + torque_value + "\n"
         fout.write(str_value)
 
 
