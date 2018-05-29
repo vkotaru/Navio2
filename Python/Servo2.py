@@ -9,7 +9,7 @@ import datetime
 
 navio.util.check_apm()
 
-PWM_OUTPUT = 0 
+PWM_OUTPUT = 3
 SERVO_MIN = 1.060 #ms
 SERVO_MAX = 1.860 #ms
 SERVO_NOM = 1.500 #ms
@@ -33,9 +33,10 @@ def main():
     loop_for(5,pwm.set_duty_cycle, SERVO_MIN)
     loop_for(3,pwm.set_duty_cycle,SERVO_MIN)
 
-    dServo = float(SERVO_MAX - SERVO_MIN)/10.0
-    for i in range(0,10):
-        loop_for(5, pwm.set_duty_cycle, SERVO_MAX-i*dServo)
+    loop_for(10,pwm.set_duty_cycle,SERVO_NOM)
+    #dServo = float(SERVO_MAX - SERVO_MIN)/10.0
+    #for i in range(0,10):
+    #    loop_for(5, pwm.set_duty_cycle, SERVO_MAX-i*dServo)
     #loop_for(5, pwm.set_duty_cycle, SERVO_MIN)
     #loop_for(3, pwm.set_duty_cycle, SERVO_MIN)
     #loop_for(3, pwm.set_duty_cycle, SERVO_NOM)

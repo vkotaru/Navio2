@@ -15,9 +15,13 @@ SERVO_MAX = 1.860 #ms
 SERVO_NOM = 1.500 #ms
 
 def loop_for(seconds, func, *args):
-    endTime = datetime.datetime.now() + datetime.timedelta(seconds=seconds)
+    startTime = datetime.datetime.now()
+    endTime = startTime + datetime.timedelta(seconds=seconds)
 
     while True:
+        #currentTime = startTime - datetime.datetime.now()
+    
+        #print "time: " + str(currentTime.seconds) + "\n"
         if datetime.datetime.now() >= endTime:
             break
         func(*args)
@@ -36,25 +40,29 @@ def main():
     loop_for(5,pwm.set_duty_cycle, SERVO_MIN)
     loop_for(3,pwm.set_duty_cycle,SERVO_MIN)
 
-    N = 20.0
-    dServo = float(SERVO_MAX - SERVO_MIN)/N
+    N = 15
+    Nmax = 20
+    dServo = float(SERVO_MAX - SERVO_MIN)/(Nmax)
 
     pwm_value = 0.0
 
     a = range(0,N+1)+range(N-1,-1,-1)
-    for i in range(0,N):
-        pwm_value = SERVO_MAX-i*dServo
-        pwm.set_duty_cycle(pwm_value)
+    for i in a:
+        pwm_value = float(SERVO_MIN+i*dServo)
 
         print "pwm value: " + str(pwm_value) + "\n"
+        loop_for(60,pwm.set_duty_cycle,pwm_value)
 
-        rpm_value = raw_input("enter rpm value: \n")
+        #print "pwm value: " + str(pwm_value) + "\n"
+        #WAITING = 1
+        #while WAITING:
+        #rpm_value = raw_input("enter rpm value: \n")
         #weight_Value = raw_input("enter weigth value: \n")
-        thrust_value = raw_input("enter thrust value: \n")
-        torque_value = raw_input("enter torque value: \n")
+        #thrust_value = raw_input("enter thrust value: \n")
+        #torque_value = raw_input("enter torque value: \n")
 
-        str_value = str(pwm_value) + "\t " + rpm_value + "\t " + thrust_value + "\t " + torque_value + "\n"
-        fout.write(str_value)
+        #str_value = str(pwm_value) + "\t " + rpm_value + "\t " + thrust_value + "\t " + torque_value + "\n"
+        #fout.write(str_value)
 
 
     fout.close    
