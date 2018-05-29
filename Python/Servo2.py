@@ -23,17 +23,22 @@ def loop_for(seconds, func, *args):
         func(*args)
 
 def main():
-    pwm =  navio.pwm.PWM(PWM_OUTPUT)
-    pwm.initialize()
-    pwm.set_period(50)
-    pwm.enable()
+
+    pwm = []
+    for i in range(4):
+        pwm.append(navio.pwm.PWM(i))
+        pwm[i].initialize()
+        pwm[i].set_period(50)
+        pwm[i].enable()
 
 
-    loop_for(3,pwm.set_duty_cycle, SERVO_MAX)
-    loop_for(5,pwm.set_duty_cycle, SERVO_MIN)
-    loop_for(3,pwm.set_duty_cycle,SERVO_MIN)
+    for i in range(4):
+        loop_for(3,pwm[i].set_duty_cycle, SERVO_MAX)
+        loop_for(5,pwm[i].set_duty_cycle, SERVO_MIN)
+        loop_for(3,pwm[i].set_duty_cycle,SERVO_MIN)
+        loop_for(3,pwm[i].set_duty_cycle,SERVO_NOM)
 
-    loop_for(10,pwm.set_duty_cycle,SERVO_NOM)
+    
     #dServo = float(SERVO_MAX - SERVO_MIN)/10.0
     #for i in range(0,10):
     #    loop_for(5, pwm.set_duty_cycle, SERVO_MAX-i*dServo)
