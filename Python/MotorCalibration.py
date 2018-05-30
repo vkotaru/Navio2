@@ -38,12 +38,5 @@ def main():
         loop_for(3,pwm[i].set_duty_cycle,SERVO_MIN)
         loop_for(3,pwm[i].set_duty_cycle,SERVO_NOM)
 
-    
-    #dServo = float(SERVO_MAX - SERVO_MIN)/10.0
-    #for i in range(0,10):
-    #    loop_for(5, pwm.set_duty_cycle, SERVO_MAX-i*dServo)
-    #loop_for(5, pwm.set_duty_cycle, SERVO_MIN)
-    #loop_for(3, pwm.set_duty_cycle, SERVO_MIN)
-    #loop_for(3, pwm.set_duty_cycle, SERVO_NOM)
 
 main()
