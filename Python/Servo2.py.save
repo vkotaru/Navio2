@@ -1,4 +1,3 @@
-
 #!/usr/bin/sudo python
 
 import sys
@@ -24,6 +23,7 @@ def loop_for(seconds, func, *args):
         func(*args)
 
 def main():
+	
     print "intializing\n"
     pwm = []
     for i in range(4):
@@ -34,9 +34,10 @@ def main():
 
 
     for i in range(4):
-        print "calibrating motor: "
-        print  i
-        print "\n"
+	print "calibrating motor "
+	print i
+	print "\n"y
+
         loop_for(3,pwm[i].set_duty_cycle, SERVO_MAX)
         loop_for(5,pwm[i].set_duty_cycle, SERVO_MIN)
         loop_for(3,pwm[i].set_duty_cycle,SERVO_MIN)
