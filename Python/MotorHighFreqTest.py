@@ -9,10 +9,10 @@ import datetime
 
 navio.util.check_apm()
 
-PWM_OUTPUT = 0
-SERVO_MIN = 1.060 #ms
-SERVO_MAX = 1.860 #ms
-SERVO_NOM = 1.500 #ms
+PWM_OUTPUT = 3
+SERVO_MIN = 1.06 # 0.53 #0.1325 #1.060 #ms
+SERVO_MAX = 1.86 #0.93 #0.2325 # 1.860 #ms
+SERVO_NOM = 0. #0.1875 #1.500 #ms
 
 def loop_for(seconds, func, *args):
     startTime = datetime.datetime.now()
@@ -32,26 +32,29 @@ def main():
     pwm.set_period(50)
     pwm.enable()
 
-    fout = open('motor_calibration.txt','w')
-    first_line = "pwm[ms]\t rpm\t thrust[kgf]\t torque[Nm]"
-    fout.write(first_line)
-
+    # fout = open('motor_calibration.txt','w')
+    # first_line = "pwm[ms]\t rpm\t thrust[kgf]\t torque[Nm]"
+    # fout.write(first_line)
+    print "calibrating..."
     loop_for(3,pwm.set_duty_cycle, SERVO_MAX)
     loop_for(5,pwm.set_duty_cycle, SERVO_MIN)
     loop_for(3,pwm.set_duty_cycle,SERVO_MIN)
+    print "done"
 
-    N = 15
-    Nmax = 20
-    dServo = float(SERVO_MAX - SERVO_MIN)/(Nmax)
+    loop_for(2,pwm.set_duty_cycle,SERVO_MAX)
+    loop_for(10,pwm.set_duty_cycle,SERVO_NOM)
+    #N = 15
+    #Nmax = 20
+    #dServo = float(SERVO_MAX - SERVO_MIN)/(Nmax)
 
-    pwm_value = 0.0
+    #pwm_value = 0.0
 
-    a = range(0,N+1)+range(N-1,-1,-1)
-    for i in a:
-        pwm_value = float(SERVO_MIN+i*dServo)
+    #a = range(0,N+1)+range(N-1,-1,-1)
+    #for i in a:
+       # pwm_value = float(SERVO_MIN+i*dServo)
 
-        print "pwm value: " + str(pwm_value) + "\n"
-        loop_for(5,pwm.set_duty_cycle,pwm_value)
+       # print "pwm value: " + str(pwm_value) + "\n"
+       # loop_for(3,pwm.set_duty_cycle,pwm_value)
 
         #print "pwm value: " + str(pwm_value) + "\n"
         #WAITING = 1
@@ -65,5 +68,5 @@ def main():
         #fout.write(str_value)
 
 
-    fout.close    
+    # fout.close    
 main()
