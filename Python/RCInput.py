@@ -8,6 +8,9 @@ navio.util.check_apm()
 rcin = navio.rcinput.RCInput()
 
 while (True):
-    period = rcin.read(2)
-    print period
+
+    for i in range(8):
+        period = rcin.read(i)
+        print "i="+ str(i) + " period =" + period
+
     time.sleep(1)
