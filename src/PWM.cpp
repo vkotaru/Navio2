@@ -62,8 +62,6 @@ bool PWM::set_duty_cycle(unsigned int channel, float period)
     strcat(path, path_ch);
 
     period_ns = period * 1e6;
-
-    printf("period_ns = %u\n",period_ns);
     if (write_file(path, "%u", period_ns) < 0)
     {
         printf("Can't set duty cycle to channel %u\n", channel);
