@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>qrotor_navio</name>
+  <name>navio2</name>
   <version>0.0.0</version>
-  <description>The qrotor_navio package</description>
+  <description>The Navio2 package</description>
 
   <maintainer email="prasanthkotaru@gmail.com">Prasanth Kotaru</maintainer>
 
@@ -20,10 +20,12 @@
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
 
   <run_depend>roscpp</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
+  <build_depend>sensor_msgs</build_depend>
 
   <export>
   </export>

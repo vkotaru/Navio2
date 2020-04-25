@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(Navio2)
+project(navio2)
 
 ## Add support for C++11, supported in ROS Kinetic and newer
 add_definitions(-std=c++11)
@@ -20,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
 ###################################
 catkin_package(
  INCLUDE_DIRS include
- LIBRARIES Navio2
+ LIBRARIES navio2
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
@@ -53,10 +53,17 @@ set(NAVIO_SRCS
 add_library(${PROJECT_NAME}
   ${NAVIO_SRCS}
 )
-target_include_directories(${PROJECT_NAME} PUBLIC . include)
-target_link_libraries(qrotor_navio ${catkin_LIBRARIES})
-add_dependencies(qrotor_navio ${catkin_EXPORTED_TARGETS})
 
+target_include_directories(${PROJECT_NAME} PUBLIC . include)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
+
+add_executable(${PROJECT_NAME}_imu_publish_node src/nodes/imu_publish_node.cpp)
+add_dependencies(${PROJECT_NAME}_imu_publish_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME}_imu_publish_node
+  ${catkin_LIBRARIES}
+  ${PROJECT_NAME}
+)
 
 #############
 # end 

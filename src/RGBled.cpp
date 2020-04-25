@@ -1,4 +1,4 @@
-#include "RGBled.h"
+#include "Navio2/RGBled.h"
 
 // Output is inverted
 #define OFF 1

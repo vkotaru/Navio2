@@ -1,4 +1,4 @@
-#include "PWM.h"
+#include "Navio2/PWM.h"
 #include "Common/Util.h"
 
 PWM::PWM()

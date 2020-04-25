@@ -3,7 +3,7 @@ Written by Qiyong Mu (kylongmu@msn.com)
 Adapted for Raspberry Pi by Mikhail Avkhimenia (mikhail.avkhimenia@emlid.com)
 */
 
-#include "MPU9250.h"
+#include "Common/MPU9250.h"
 
 #define G_SI 9.80665
 #define PI   3.14159

@@ -10,7 +10,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "gpio.h"
+#include "Common/gpio.h"
 
 #define LOW                 0
 #define HIGH                1

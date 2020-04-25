@@ -2,7 +2,7 @@
   Written by Alexey Bulatov (alexey.bulatov@emlid.com) for Raspberry Pi
 */
 
-#include "LSM9DS1.h"
+#include "Navio2/LSM9DS1.h"
 
 #define DEVICE_ACC_GYRO     "/dev/spidev0.3"
 #define DEVICE_MAGNETOMETER "/dev/spidev0.2"
